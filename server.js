@@ -11,7 +11,6 @@ const mongoose = require('mongoose');
 // Connection to DB
 mongoose.connect(process.env.connectionstring)
 .then(() => {
-    console.log('DB Connected !');
     // Aqui no caso, quando retornar a promise sem erros. O express vai emitir um 'ready'.
     app.emit('ready');
 })
