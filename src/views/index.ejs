@@ -11,7 +11,7 @@
 
                     <%- include('includes/messages') %>
 
-                        <% if(contatos.length> 0){ %>
+                        <% if(contatos.length > 0){ %>
                             <div class="responsive-table">
                                 <table class="table table-dark my-3">
                                     <% contatos.forEach(contato=> { %>
@@ -30,8 +30,10 @@
                                                 <%= contato.email %>
                                             </td>
                                             <td><a href="/contato/index/<%= contato._id%>">Editar</a></td>
+                                            <% if(user && user.role == 0) { %>
                                             <td><a class="text-danger"
                                                     href="/contato/delete/<%= contato._id %>">Deletar</a></td>
+                                            <% } %>
                                         </tr>
                             </div>
 

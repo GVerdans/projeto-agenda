@@ -44,6 +44,10 @@ exports.login = async function (req, res) {
 
         req.flash('success', 'You are Logged in !');
         req.session.user = login.user;
+        
+        // Save user role to render delete button or not
+        req.session.role = login.user.role;
+        
         req.session.save(function () {
             return res.redirect('/login/index');
         });
