@@ -8,6 +8,7 @@ exports.index = (req, res) => {
 
 exports.register = async (req, res) => {
     try {
+        req.body.userId = req.session.user._id;
 
         const contato = new Contato(req.body);
         await contato.register();

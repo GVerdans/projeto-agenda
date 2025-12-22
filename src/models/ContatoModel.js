@@ -6,7 +6,8 @@ const ContatoSchema = new mongoose.Schema({
     sobrenome: { type: String, required: false, default: '' },
     email: { type: String, required: false, default: '' },
     telefone: { type: String, required: false, default: '' },
-    criadoEm: { type: Date, default: Date.now }
+    criadoEm: { type: Date, default: Date.now },
+    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'Login', required: true }
 });
 
 const ContatoModel = mongoose.model('Contato', ContatoSchema);
@@ -21,6 +22,13 @@ Contato.buscaPorId = async function (id) {
     if (typeof id !== 'string') return;
     const user = await ContatoModel.findById(id);
     return user;
+}
+
+Contato.buscaContatosPorUser = async function(userId){
+    if(!userId) return;
+
+    const contatos = await ContatoModel.find({ userId }).sort({ criadoEm: -1 });
+    return contatos;
 }
 
 Contato.prototype.register = async function () {
@@ -42,7 +50,7 @@ Contato.prototype.valida = function () {
 
 Contato.prototype.cleanUp = function () {
     for (const key in this.body) {
-        if (typeof this.body[key] !== 'string') {
+        if (typeof this.body[key] !== 'string' && key !== 'userId') {
             this.body[key] = '';
         }
     }
@@ -51,7 +59,8 @@ Contato.prototype.cleanUp = function () {
         nome: this.body.name,
         sobrenome: this.body.lastname,
         email: this.body.email,
-        telefone: this.body.phone
+        telefone: this.body.phone,
+        userId: this.body.userId
     }
 }
 
