@@ -10,10 +10,16 @@
                     <p class="text-center lead">Contatos de Clientes</p>
 
                     <%- include('includes/messages') %>
+                    <div class="responsive-table">
+                        <table class="table table-dark my-3">
+                            <tr>
+                                <td>Name</td>
+                                <td>Last Name</td>
+                                <td>Phone</td>
+                                <td>E-mail</td>
+                            </tr>
 
-                        <% if(contatos.length > 0){ %>
-                            <div class="responsive-table">
-                                <table class="table table-dark my-3">
+                        <% if(contatos.length > 0 && user){ %>
                                     <% contatos.forEach(contato=> { %>
 
                                         <tr>
@@ -30,6 +36,7 @@
                                                 <%= contato.email %>
                                             </td>
                                             <td><a href="/contato/index/<%= contato._id%>">Editar</a></td>
+
                                             <% if(user && user.role == 0) { %>
                                             <td><a class="text-danger"
                                                     href="/contato/delete/<%= contato._id %>">Deletar</a></td>
@@ -37,10 +44,10 @@
                                         </tr>
                             </div>
 
-                            <% }); %>
-                                <% } else { %>
-                                    <p class="text-center lead">There are no registered contacts!</p>
-                                    <% } %>
+                        <% }); %>
+                            <% } else { %>
+                                <p class="text-center lead">There are no registered contacts!</p>
+                            <% } %>
                 </div>
 
             </div>
