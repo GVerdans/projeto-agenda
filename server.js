@@ -3,18 +3,18 @@ require('dotenv').config();
 // Express configs to run server.
 const express = require('express');
 const app = express();
-const port = 3000;
+const port = process.env.serverport;
 
 // const tudo do DB \/
 const mongoose = require('mongoose');
 
 // Connection to DB
 mongoose.connect(process.env.connectionstring)
-.then(() => {
+  .then(() => {
     // Aqui no caso, quando retornar a promise sem erros. O express vai emitir um 'ready'.
     app.emit('ready');
-})
-.catch(e => console.log('Erro ao Conectar DB: ' + e));
+  })
+  .catch(e => console.log('Erro ao Conectar DB: ' + e));
 
 const session = require('express-session'); // Inicialzação das Sessions.
 const MongoStore = require('connect-mongo'); // Sessões salvos no DB.
@@ -63,16 +63,16 @@ app.use(express.static(path.resolve(__dirname, './public')));
 
 // Cria a Session (No PHP é mais fácil)
 const sessionOptions = session({
-    secret: 'asadasadasadfafsdfghdfghd',
-    store: MongoStore.create({
-        mongoUrl: process.env.connectionstring
-    }),
-    resave: false,
-    saveUninitialized: false,
-    cookie: {
-        maxAge: 1000 * 60 * 60 * 24 * 7,
-        httpOnly: true
-    }
+  secret: 'asadasadasadfafsdfghdfghd',
+  store: MongoStore.create({
+    mongoUrl: process.env.connectionstring
+  }),
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    httpOnly: true
+  }
 });
 
 app.use(sessionOptions);
@@ -100,8 +100,7 @@ app.use(routes);
 // Isso está sendo feito para que eu só rode o server quando o DB estiver connectado.clear
 
 app.on('ready', () => {
-    app.listen(port, () => {
-        console.log('Acessar: http://localhost:3000');
-        console.log('Server rodando na porta 3000');
-    });
+  app.listen(port, () => {
+    console.log('Server rodando');
+  });
 })
