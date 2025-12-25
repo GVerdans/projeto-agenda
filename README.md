@@ -2,8 +2,8 @@
 
 > Uma aplicação de agenda simples para criar, listar e Editar contatos.
 
-- __Live demo:__ https://contactsgvs.duckdns.org/  
-_(Por ora está hospedade no GCloud Plataform)_
+- __Live demo:__ https://projeto-agenda-dbn2.onrender.com/  
+_(Já esteve Hospedado no GCloud Plataform)_
 
 ---
 
